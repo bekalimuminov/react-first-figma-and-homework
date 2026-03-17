@@ -1,11 +1,15 @@
 import {useState} from "react";
 import Sidebar from "../components/sidebar.jsx";
 import {mock2, stats} from "../allMocks/mock.jsx";
-
 import searchIcon from "../assets/search-icon.svg";
 import filterIcon from "../assets/filter.svg";
 import saralashIcon from "../assets/saralash.svg";
 import omborIcon from "../assets/ombor.svg";
+import Pagination from '@mui/material/Pagination';
+import PaginationItem from '@mui/material/PaginationItem';
+import Stack from '@mui/material/Stack';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 function statusColor(status) {
     if (status === "Yetkazilgan") return "bg-green-100 text-green-600";
@@ -14,12 +18,18 @@ function statusColor(status) {
     return "bg-yellow-100 text-yellow-600";
 }
 
+const perPage = 2;
+
 export default function DillerOmbor() {
     const [data, setData] = useState(mock2);
+    const [currentPage, setCurrentPage] = useState(1);
+    const totalPages = Math.ceil(data.length / perPage);
+    const paginatedData = data.slice((currentPage - 1) * perPage, currentPage * perPage);
 
     function searchUser(e) {
         const res = mock2.filter(item => item.id.toLowerCase().includes(e.target.value.toLowerCase()));
         setData(res);
+        setCurrentPage(1);
     }
 
     return (
@@ -92,8 +102,8 @@ export default function DillerOmbor() {
                         <p className="text-[12px] font-[600] text-gray-500">STATUS</p>
                     </div>
 
-                    {data.length ? (
-                        data.map((row) => (
+                    {paginatedData.length ? (
+                        paginatedData.map((row) => (
                             <div key={row.id} className="grid grid-cols-7 px-4 py-3 border-t border-gray-100 items-center">
                                 <p className="text-[14px] font-[500]">{row.id}</p>
                                 <p className="text-[14px]">{row.sana}</p>
@@ -113,11 +123,22 @@ export default function DillerOmbor() {
                     )}
 
                     <div className="flex items-center justify-between px-4 py-3 border-t border-gray-100">
-                        <p className="text-[13px] text-gray-500">Showing 1 to 6 of 1,420 results</p>
-                        <div className="flex gap-1">
-                            <button className="border border-gray-200 px-3 py-1 rounded text-[13px]">‹</button>
-                            <button className="border border-gray-200 px-3 py-1 rounded text-[13px]">›</button>
-                        </div>
+                        <p className="text-[13px] text-gray-500">
+                            {data.length} tadan {(currentPage - 1) * perPage + 1}–{Math.min(currentPage * perPage, data.length)} ko'rsatilmoqda
+                        </p>
+                        <Stack spacing={2}>
+                            <Pagination
+                                count={totalPages}
+                                page={currentPage}
+                                onChange={(e, page) => setCurrentPage(page)}
+                                renderItem={(item) => (
+                                    <PaginationItem
+                                        slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                        {...item}
+                                    />
+                                )}
+                            />
+                        </Stack>
                     </div>
                 </div>
 

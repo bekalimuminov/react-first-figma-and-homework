@@ -8,25 +8,39 @@ import editIcon from "../assets/edit.svg";
 import deleteIcon from "../assets/dalete.svg";
 import whiteIcon from "../assets/whiteDeleteIcon.svg";
 import eye from "../assets/eye.svg";
+import Pagination from '@mui/material/Pagination';
+import PaginationItem from '@mui/material/PaginationItem';
+import Stack from '@mui/material/Stack';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
+const perPage = 10;
 
 export default function Home() {
     const [data, setData] = useState(mock);
     const [selected, setSelected] = useState([]);
     const [allData, setAllData] = useState(mock);
+    const [currentPage, setCurrentPage] = useState(1);
 
+    const totalPages = Math.ceil(data.length / perPage);
+    const paginatedData = data.slice((currentPage - 1) * perPage, currentPage * perPage);
 
     function deleteSelected() {
         const res = allData.filter(item => !selected.includes(item.id));
         setAllData(res);
         setData(res);
         setSelected([]);
+        setCurrentPage(1);
     }
 
     function searchUser(e) {
-        const res = allData.filter(item => item.nomi.toLowerCase().includes(e.target.value.toLowerCase()) || item.shaxs.toLowerCase().includes(e.target.value.toLowerCase()));
+        const res = allData.filter(item =>
+            item.nomi.toLowerCase().includes(e.target.value.toLowerCase()) ||
+            item.shaxs.toLowerCase().includes(e.target.value.toLowerCase())
+        );
         setData(res);
+        setCurrentPage(1);
     }
-
 
     function toggleSelect(id) {
         if (selected.includes(id)) {
@@ -36,10 +50,12 @@ export default function Home() {
         }
     }
 
-    function deleteAccount(id){
+    function deleteAccount(id) {
         const deleteUser = data.filter(item => item.id !== id);
         setData(deleteUser);
+        setCurrentPage(1);
     }
+
     function changeAll(e) {
         if (e.target.value === "Manzil") {
             setData(allData);
@@ -47,6 +63,7 @@ export default function Home() {
             const res = allData.filter(item => item.manzil.includes(e.target.value));
             setData(res);
         }
+        setCurrentPage(1);
     }
 
     function chengeSecond(e) {
@@ -56,6 +73,7 @@ export default function Home() {
             const res = allData.filter(item => item.status === e.target.value);
             setData(res);
         }
+        setCurrentPage(1);
     }
 
     return (<>
@@ -74,8 +92,7 @@ export default function Home() {
                            placeholder="Diler nomi yoki mas'ul shaxs bo'yicha qidirish..." onChange={searchUser}/>
                 </div>
                 <div className="flex gap-3 mb-4">
-                    <select className="border border-gray-200 rounded-lg px-3 py-1.5 text-[14px] cursor-pointer"
-                            onChange={chengeSecond}>
+                    <select className="border border-gray-200 rounded-lg px-3 py-1.5 text-[14px] cursor-pointer" onChange={chengeSecond}>
                         <option>Status</option>
                         <option>Faol</option>
                         <option>Faol emas</option>
@@ -99,11 +116,9 @@ export default function Home() {
                         </button>
                     </div>
                 </div>
-                <div className="bg-white h-[400px] overflow-scroll rounded-lg">
+                <div className="bg-white rounded-lg">
                     <div className="grid grid-cols-6 px-4 py-3 items-center">
-                        <div>
-                            <input className="cursor-pointer" type="checkbox"/>
-                        </div>
+                        <div><input className="cursor-pointer" type="checkbox"/></div>
                         <p className="text-[12px] font-[600] text-gray-500">DILER NOMI</p>
                         <p className="text-[12px] font-[600] text-gray-500">MAS'UL SHAXS</p>
                         <p className="text-[12px] font-[600] text-gray-500">MANZIL</p>
@@ -111,10 +126,9 @@ export default function Home() {
                         <p className="text-[12px] font-[600] text-gray-500">HARAKATLAR</p>
                     </div>
                     {
-                        data.length ? (
-                            data.map((row) => (
-                                <div key={row.id}
-                                     className="grid grid-cols-6 px-4 py-3 border-t border-gray-100 items-center">
+                        paginatedData.length ? (
+                            paginatedData.map((row) => (
+                                <div key={row.id} className="grid grid-cols-6 px-4 py-3 border-t border-gray-100 items-center">
                                     <div className="cursor-pointer">
                                         <input
                                             type="checkbox"
@@ -134,10 +148,9 @@ export default function Home() {
                                     <div>
                                         <p className="text-[14px]">{row.manzil}</p>
                                     </div>
-                                    <span
-                                        className={`px-3 py-1 rounded-full w-[50px] text-[12px] font-[500] ${row.status === "Faol" ? "bg-[#DCFCE7] text-green-600" : "bg-[#FEE2E2] w-[80px] text-red-500"}`}>
-                                                {row.status}
-                                            </span>
+                                    <span className={`px-3 py-1 rounded-full w-[50px] text-[12px] font-[500] ${row.status === "Faol" ? "bg-[#DCFCE7] text-green-600" : "bg-[#FEE2E2] w-[80px] text-red-500"}`}>
+                                        {row.status}
+                                    </span>
                                     <div className="flex items-center gap-3">
                                         <img src={eyeIcon} alt="view" className="cursor-wait"/>
                                         <img src={editIcon} alt="edit" className="cursor-wait"/>
@@ -151,8 +164,26 @@ export default function Home() {
                             </div>
                         )
                     }
+                    <div className="flex items-center justify-between px-4 py-3 border-t border-gray-100">
+                        <p className="text-[13px] text-gray-500">
+                            {data.length} tadan {(currentPage - 1) * perPage + 1}–{Math.min(currentPage * perPage, data.length)} ko'rsatilmoqda
+                        </p>
+                        <Stack spacing={2}>
+                            <Pagination
+                                count={totalPages}
+                                page={currentPage}
+                                onChange={(e, page) => setCurrentPage(page)}
+                                renderItem={(item) => (
+                                    <PaginationItem
+                                        slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                        {...item}
+                                    />
+                                )}
+                            />
+                        </Stack>
+                    </div>
                 </div>
             </div>
         </div>
-    </>)
+    </>);
 }

@@ -34,6 +34,7 @@ export const mock = [
     { id: 90561, nomi: "Farovon Savdo", shaxs: "Nargiza Karimova", tel: "+998 94 789 01 23", manzil: "Farg'ona", status: "Faol", tanlandi: true },
     { id: 11671, nomi: "Umid Biznes", shaxs: "Eldor Toshpulatov", tel: "+998 91 890 12 34", manzil: "Toshkent", status: "Faol", tanlandi: true },
     { id: 22781, nomi: "Shams Savdo", shaxs: "Gulnora Hasanova", tel: "+998 93 901 23 45", manzil: "Samarqand", status: "Faol emas", tanlandi: false },
+    { id: 30000, nomi: "Umid Biznes", shaxs: "Eldor Toshpulatov", tel: "+998 91 890 12 34", manzil: "Toshkent", status: "Faol", tanlandi: true },
 ]
 
 

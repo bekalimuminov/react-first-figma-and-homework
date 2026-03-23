@@ -6,10 +6,6 @@ import filterIcon from "../assets/filter.svg";
 import saralashIcon from "../assets/saralash.svg";
 import omborIcon from "../assets/ombor.svg";
 import Pagination from '@mui/material/Pagination';
-import PaginationItem from '@mui/material/PaginationItem';
-import Stack from '@mui/material/Stack';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 function statusColor(status) {
     if (status === "Yetkazilgan") return "bg-green-100 text-green-600";
@@ -18,34 +14,36 @@ function statusColor(status) {
     return "bg-yellow-100 text-yellow-600";
 }
 
-const perPage = 2;
-
 export default function DillerOmbor() {
     const [data, setData] = useState(mock2);
-    const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = Math.ceil(data.length / perPage);
-    const paginatedData = data.slice((currentPage - 1) * perPage, currentPage * perPage);
+    const [hozirgi, setHozirgi] = useState(1);
+    const [kurinadigan, setKurinadigan] = useState(2);
+    const endPage = kurinadigan * hozirgi;
+    const firstPage = endPage - kurinadigan;
+    const a = Math.ceil(mock2.length / kurinadigan);
 
     function searchUser(e) {
         const res = mock2.filter(item => item.id.toLowerCase().includes(e.target.value.toLowerCase()));
         setData(res);
-        setCurrentPage(1);
     }
 
-    return (
-        <div className="flex h-screen w-screen">
-            <Sidebar/>
-            <div className="flex-1 bg-[#F3F4F6] overflow-y-auto p-6">
+    const handleChange = (event, value) => {
+        setHozirgi(value);
+    };
 
+    return (
+        <div className="flex h-screen w-screen dark:bg-[#13131F]">
+            <Sidebar/>
+            <div className="flex-1 bg-[#F3F4F6] dark:bg-[#13131F] overflow-y-auto p-6">
                 <div className="flex items-center justify-between mb-6">
                     <div>
-                        <h1 className="text-[24px] font-[700]">Yetkazib berish</h1>
-                        <p className="text-[13px] text-gray-400">Barcha mahsulot yetkazib berishlarini kuzatib boring.</p>
+                        <h1 className="text-[24px] font-[700] dark:text-white">Yetkazib berish</h1>
+                        <p className="text-[13px] text-gray-400 dark:text-gray-500">Barcha mahsulot yetkazib berishlarini kuzatib boring.</p>
                     </div>
                     <div className="flex items-center gap-3">
-                        <div className="border border-gray-200 bg-[#F3F4F6] px-4 py-2 rounded-lg text-[14px] flex items-center gap-2">
+                        <div className="border border-gray-200 dark:border-gray-700 bg-[#F3F4F6] dark:bg-[#1E1E2E] px-4 py-2 rounded-lg text-[14px] flex items-center gap-2">
                             <img src={omborIcon} alt="img"/>
-                            <select className="bg-[#F3F4F6]">
+                            <select className="bg-[#F3F4F6] dark:bg-[#1E1E2E] dark:text-gray-300">
                                 <option>Oxirgi 30 kun</option>
                                 <option>Oxirgi 20 kun</option>
                                 <option>Oxirgi 10 kun</option>
@@ -57,12 +55,12 @@ export default function DillerOmbor() {
 
                 <div className="grid grid-cols-4 gap-4 mb-6">
                     {stats.map((item, index) => (
-                        <div key={index} className="bg-white rounded-lg p-4 border border-gray-100">
+                        <div key={index} className="bg-white dark:bg-[#1E1E2E] rounded-lg p-4 border border-gray-100 dark:border-gray-700">
                             <div className="flex gap-4">
                                 <img src={item.image} alt="img"/>
                                 <div>
-                                    <p className="text-[14px] text-gray-500 w-[100px]">{item.label}</p>
-                                    <p className="text-[28px] font-[700]">{item.value}</p>
+                                    <p className="text-[14px] text-gray-500 dark:text-gray-400 w-[100px]">{item.label}</p>
+                                    <p className="text-[28px] font-[700] dark:text-white">{item.value}</p>
                                 </div>
                             </div>
                             <p className={`text-[12px] mt-1 ${item.up ? "text-[#16A34A]" : "text-[#DC2626]"}`}>
@@ -72,48 +70,46 @@ export default function DillerOmbor() {
                     ))}
                 </div>
 
-                <div className="bg-white rounded-lg border border-gray-200">
-                    <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
-                        <h2 className="text-[16px] font-[600]">Barcha yetkazib berishlar</h2>
+                <div className="bg-white dark:bg-[#1E1E2E] rounded-lg border border-gray-200 dark:border-gray-700">
+                    <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                        <h2 className="text-[16px] font-[600] dark:text-white">Barcha yetkazib berishlar</h2>
                     </div>
 
-                    <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
-                        <div className="border border-gray-200 rounded-lg px-3 py-2 flex items-center gap-2 w-[400px]">
+                    <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                        <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 flex items-center gap-2 w-[400px]">
                             <img src={searchIcon} alt="img"/>
-                            <input className="outline-none text-[14px] text-gray-500 w-full" placeholder="ID, diler, do'kon bo'yicha qidirish..." onChange={searchUser}/>
+                            <input className="outline-none text-[14px] text-gray-500 dark:text-gray-300 dark:bg-transparent w-full" placeholder="ID, diler, do'kon bo'yicha qidirish..." onChange={searchUser}/>
                         </div>
                         <div className="flex gap-2">
-                            <button className="border border-gray-200 px-4 py-2 rounded-lg text-[14px] flex items-center gap-2">
+                            <button className="border border-gray-200 dark:border-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg text-[14px] flex items-center gap-2">
                                 <img src={filterIcon} alt="img"/> Filter
                             </button>
-                            <button className="border border-gray-200 px-4 py-2 rounded-lg text-[14px] flex items-center gap-2">
+                            <button className="border border-gray-200 dark:border-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg text-[14px] flex items-center gap-2">
                                 <img src={saralashIcon} alt="img"/> Saralash
                             </button>
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-7 px-4 py-3 border-b border-gray-100">
-                        <p className="text-[12px] font-[600] text-gray-500">YETKAZIB BERISH ID</p>
-                        <p className="text-[12px] font-[600] text-gray-500">SANA</p>
-                        <p className="text-[12px] font-[600] text-gray-500">JO'NATUVCHI</p>
-                        <p className="text-[12px] font-[600] text-gray-500">QABUL QILUVCHI</p>
-                        <p className="text-[12px] font-[600] text-gray-500">MAHSULOTLAR</p>
-                        <p className="text-[12px] font-[600] text-gray-500">MIQDORI</p>
-                        <p className="text-[12px] font-[600] text-gray-500">STATUS</p>
+                    <div className="grid grid-cols-7 px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                        <p className="text-[12px] font-[600] text-gray-500 dark:text-gray-400">YETKAZIB BERISH ID</p>
+                        <p className="text-[12px] font-[600] text-gray-500 dark:text-gray-400">SANA</p>
+                        <p className="text-[12px] font-[600] text-gray-500 dark:text-gray-400">JO'NATUVCHI</p>
+                        <p className="text-[12px] font-[600] text-gray-500 dark:text-gray-400">QABUL QILUVCHI</p>
+                        <p className="text-[12px] font-[600] text-gray-500 dark:text-gray-400">MAHSULOTLAR</p>
+                        <p className="text-[12px] font-[600] text-gray-500 dark:text-gray-400">MIQDORI</p>
+                        <p className="text-[12px] font-[600] text-gray-500 dark:text-gray-400">STATUS</p>
                     </div>
 
-                    {paginatedData.length ? (
-                        paginatedData.map((row) => (
-                            <div key={row.id} className="grid grid-cols-7 px-4 py-3 border-t border-gray-100 items-center">
-                                <p className="text-[14px] font-[500]">{row.id}</p>
-                                <p className="text-[14px]">{row.sana}</p>
-                                <p className="text-[14px]">{row.jonatuvchi}</p>
-                                <p className="text-[14px]">{row.qabul}</p>
-                                <p className="text-[14px] text-gray-500">{row.mahsulot}</p>
-                                <p className="text-[14px]">{row.miqdor}</p>
-                                <span className={`px-3 py-1 rounded-full text-[12px] font-[500] w-fit ${statusColor(row.status)}`}>
-                                    {row.status}
-                                </span>
+                    {data.length ? (
+                        data.slice(firstPage, endPage).map((row) => (
+                            <div key={row.id} className="grid grid-cols-7 px-4 py-3 border-t border-gray-100 dark:border-gray-700 items-center">
+                                <p className="text-[14px] font-[500] dark:text-white">{row.id}</p>
+                                <p className="text-[14px] dark:text-white">{row.sana}</p>
+                                <p className="text-[14px] dark:text-white">{row.jonatuvchi}</p>
+                                <p className="text-[14px] dark:text-white">{row.qabul}</p>
+                                <p className="text-[14px] text-gray-500 dark:text-gray-400">{row.mahsulot}</p>
+                                <p className="text-[14px] dark:text-white">{row.miqdor}</p>
+                                <span className={`px-3 py-1 rounded-full text-[12px] font-[500] w-fit ${statusColor(row.status)}`}>{row.status}</span>
                             </div>
                         ))
                     ) : (
@@ -121,27 +117,10 @@ export default function DillerOmbor() {
                             <h1 className="text-[30px] text-red-400">bro bu yerda siz qidirgan diller yuq</h1>
                         </div>
                     )}
-
-                    <div className="flex items-center justify-between px-4 py-3 border-t border-gray-100">
-                        <p className="text-[13px] text-gray-500">
-                            {data.length} tadan {(currentPage - 1) * perPage + 1}–{Math.min(currentPage * perPage, data.length)} ko'rsatilmoqda
-                        </p>
-                        <Stack spacing={2}>
-                            <Pagination
-                                count={totalPages}
-                                page={currentPage}
-                                onChange={(e, page) => setCurrentPage(page)}
-                                renderItem={(item) => (
-                                    <PaginationItem
-                                        slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                        {...item}
-                                    />
-                                )}
-                            />
-                        </Stack>
+                    <div>
+                        <Pagination count={a} onChange={handleChange}/>
                     </div>
                 </div>
-
             </div>
         </div>
     )

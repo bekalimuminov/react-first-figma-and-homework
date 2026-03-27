@@ -35,6 +35,7 @@ export const mock = [
     { id: 11671, nomi: "Umid Biznes", shaxs: "Eldor Toshpulatov", tel: "+998 91 890 12 34", manzil: "Toshkent", status: "Faol", tanlandi: true },
     { id: 22781, nomi: "Shams Savdo", shaxs: "Gulnora Hasanova", tel: "+998 93 901 23 45", manzil: "Samarqand", status: "Faol emas", tanlandi: false },
     { id: 30000, nomi: "Umid Biznes", shaxs: "Eldor Toshpulatov", tel: "+998 91 890 12 34", manzil: "Toshkent", status: "Faol", tanlandi: true },
+    { id: 30000, nomi: "Biznes", shaxs: "Yigitali Muminov", tel: "+998 91 890 12 34", manzil: "Toshkent", status: "Faol", tanlandi: true },
 ]
 
 
@@ -54,4 +55,11 @@ export const mock2 = [
     { id: "#DLV-001251", sana: "2024-07-19", jonatuvchi: "Diler: Aziz Ahmedov", qabul: "Do'kon: Makro", mahsulot: "Nestle Sut 1L", miqdor: 200, status: "Bekor qilinga" },
     { id: "#DLV-001250", sana: "2024-07-18", jonatuvchi: "Asosiy ombor", qabul: "Diler: Aziz Ahmedov", mahsulot: "Sultan Choy (yashil)", miqdor: 40, status: "Yetkazilgan" },
     { id: "#DLV-001249", sana: "2024-07-18", jonatuvchi: "Diler: Sardor Komilov", qabul: "Do'kon: Havas", mahsulot: "Coca-Cola", miqdor: 500, status: "Tayyorlanmo" },
+    { id: "#DLV-001254", sana: "2024-07-21", jonatuvchi: "Asosiy ombor", qabul: "Diler: Aziz Ahmedov", mahsulot: "Coca-Cola, Oreo...", miqdor: 150, status: "Yetkazilgan" },
+    { id: "#DLV-001253", sana: "2024-07-20", jonatuvchi: "Diler: Aziz Ahmedov", qabul: "Do'kon: Korzinka", mahsulot: "Sultan Choy (qora)", miqdor: 50, status: "Yo'lda" },
+    { id: "#DLV-001252", sana: "2024-07-20", jonatuvchi: "Asosiy ombor", qabul: "Diler: Sardor Komilov", mahsulot: "Alpen Gold, Oreo", miqdor: 80, status: "Yetkazilgan" },
+    { id: "#DLV-001251", sana: "2024-07-19", jonatuvchi: "Diler: Aziz Ahmedov", qabul: "Do'kon: Makro", mahsulot: "Nestle Sut 1L", miqdor: 200, status: "Bekor qilinga" },
+    { id: "#DLV-001250", sana: "2024-07-18", jonatuvchi: "Asosiy ombor", qabul: "Diler: Aziz Ahmedov", mahsulot: "Sultan Choy (yashil)", miqdor: 40, status: "Yetkazilgan" },
+    { id: "#DLV-001249", sana: "2024-07-18", jonatuvchi: "Diler: Sardor Komilov", qabul: "Do'kon: Havas", mahsulot: "Coca-Cola", miqdor: 500, status: "Tayyorlanmo" },
+
 ]

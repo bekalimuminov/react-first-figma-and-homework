@@ -17,7 +17,7 @@ function statusColor(status) {
 export default function DillerOmbor() {
     const [data, setData] = useState(mock2);
     const [hozirgi, setHozirgi] = useState(1);
-    const [kurinadigan, setKurinadigan] = useState(2);
+    const [kurinadigan, setKurinadigan] = useState(5);
     const endPage = kurinadigan * hozirgi;
     const firstPage = endPage - kurinadigan;
     const a = Math.ceil(mock2.length / kurinadigan);

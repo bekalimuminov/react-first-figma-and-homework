@@ -2,7 +2,7 @@ import React from 'react';
 import useStore from '../store/store.js';
 
 export default function UseStorePages() {
-    const {status, setStatus} = useStore();
+    const {status, setStatus , count , increment , dincrement , reset} = useStore();
 
     const boss = () => {
         const promt = prompt("yoshizni kiriting chuvak");
@@ -58,10 +58,22 @@ export default function UseStorePages() {
                         )
                     }
 
-                    <div
-                        className="absolute -top-10 -left-10 w-32 h-32 bg-blue-600 rounded-full blur-[80px] opacity-20 -z-10"></div>
-                    <div
-                        className="absolute -bottom-10 -right-10 w-32 h-32 bg-cyan-400 rounded-full blur-[80px] opacity-20 -z-10"></div>
+                    <h1 className="text-xl text-gray-400 mb-2 uppercase tracking-widest">Hisoblagich</h1>
+
+
+
+                    <div className="flex gap-4 justify-center">
+
+                        <button className="text-[50px] border border-blue-800 rounded-full w-full" onClick={increment}>+</button>
+
+                        <div className="text-7xl font-black text-white mb-8">
+                            {count}
+                        </div>
+
+                        <button className="text-[50px] border border-blue-800 rounded-full w-full" onClick={dincrement}>-</button>
+                        <button onClick={reset} className="px-6 rounded-xl bg-gray-500/20 border border-gray-500/50 text-gray-300 hover:bg-gray-500 hover:text-white transition-all active:scale-90">Reset</button>
+
+                    </div>
                 </div>
             </div>
         </>

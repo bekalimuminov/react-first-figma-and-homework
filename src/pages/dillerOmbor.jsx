@@ -1,5 +1,5 @@
 import {useState} from "react";
-import Sidebar from "../components/sidebar.jsx";
+import Sidebar2 from "../components/sidebar2.jsx";
 import {mock2, stats} from "../allMocks/mock.jsx";
 import searchIcon from "../assets/search-icon.svg";
 import filterIcon from "../assets/filter.svg";
@@ -33,7 +33,7 @@ export default function DillerOmbor() {
 
     return (
         <div className="flex h-screen w-screen dark:bg-[#13131F]">
-            <Sidebar/>
+            <Sidebar2 />
             <div className="flex-1 bg-[#F3F4F6] dark:bg-[#13131F] overflow-y-auto p-6">
                 <div className="flex items-center justify-between mb-6">
                     <div>

@@ -10,6 +10,7 @@ import whiteIcon from "../assets/whiteDeleteIcon.svg";
 import eye from "../assets/eye.svg";
 import Pagination from '@mui/material/Pagination';
 import { Link  } from "react-router-dom";
+import Header from "../components/header.jsx";
 
 
 export default function Home() {
@@ -22,11 +23,15 @@ export default function Home() {
     const firstPage = endPage - kurinadigan;
     const a = Math.ceil(mock.length / kurinadigan);
     const [editId, setEditId] = useState(null);
+    const [userName, setUserName] = useState('');
+    const [userStatus, setUserStatus] = useState('');
     const [editData, setEditData] = useState({});
 
     const handleChange = (event, value) => {
         setHozirgi(value);
     };
+
+    const [showModal, setShowModal] = useState(false);
 
     function startEdit(row) {
         setEditId(row.id);
@@ -73,6 +78,15 @@ export default function Home() {
             setData(res);
         }
     }
+    function addUser(){
+        setShowModal = true;
+        let user = {
+            id: data.now(),
+            name: userName,
+            status: userStatus,
+        }
+        setData([...user, data]);
+    }
 
     function chengeSecond(e) {
         if (e.target.value === "Status") {
@@ -87,141 +101,148 @@ export default function Home() {
         <>
             <div className="flex h-screen w-screen dark:bg-[#13131F]">
                 <Sidebar/>
-                <div className="flex-1 bg-[#F3F4F6] dark:bg-[#13131F] overflow-y-auto p-6">
-                    <div className="flex items-center justify-between mb-6">
-                        <h1 className="text-[24px] font-[700] dark:text-white">Diller ro'yxati</h1>
-                        <Link to="/useStorePages" className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-[14px] cursor-pointer">
-                            <img src={addIcon} alt="img"/> Click me
-                        </Link>
-                    </div>
-
-                    <div
-                        className="bg-white dark:bg-[#1E1E2E] border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-2 mb-4 flex items-center gap-2">
-                        <img src={searchIcon} alt="img"/>
-                        <input
-                            className="outline-none w-[1120px] text-[14px] text-gray-500 dark:text-gray-300 bg-transparent"
-                            placeholder="Diler nomi yoki mas'ul shaxs bo'yicha qidirish..." onChange={searchUser}/>
-                    </div>
-
-                    <div className="flex gap-3 mb-4">
-                        <select
-                            className="border border-gray-200 dark:border-gray-700 dark:bg-[#1E1E2E] dark:text-gray-300 rounded-lg px-3 py-1.5 text-[14px] cursor-pointer"
-                            onChange={chengeSecond}>
-                            <option>Status</option>
-                            <option>Faol</option>
-                            <option>Faol emas</option>
-                        </select>
-                        <select
-                            className="border border-gray-200 dark:border-gray-700 dark:bg-[#1E1E2E] dark:text-gray-300 rounded-lg px-3 py-1.5 text-[14px] cursor-pointer"
-                            onChange={changeAll}>
-                            <option>Manzil</option>
-                            <option>Toshkent</option>
-                            <option>Samarqand</option>
-                            <option>Buxoro</option>
-                            <option>Farg'ona</option>
-                        </select>
-                    </div>
-
-                    <div
-                        className="flex items-center justify-between px-4 py-[10px] bg-[#135BEC1A] dark:bg-blue-900/20 rounded-lg mb-4">
-                        <p className="text-[14px] text-blue-600">{selected.length} diler tanlandi</p>
-                        <div className="flex gap-2">
-                            <button
-                                className="flex items-center border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#1E1E2E] dark:text-gray-300 w-[191px] h-[36px] cursor-not-allowed rounded-lg text-[14px]">
-                                <img className="ml-[10px]" src={eye} alt="img"/> Statusni o'zgartirish
-                            </button>
-                            <button onClick={deleteSelected}
-                                    className="flex items-center bg-red-500 text-white w-[107px] h-[36px] rounded-lg text-[14px] cursor-pointer">
-                                <img className="ml-[15px]" src={whiteIcon} alt="img"/> O'chirish
+                <div className=" flex-1 bg-[#F3F4F6] dark:bg-[#13131F] overflow-y-auto p-6">
+                    <Header/>
+                    <div className="flex-1 mt-[20px]">
+                        <div className={showModal ? "" : "hidden"}>
+                            <p>ygyvgb</p>
+                        </div>
+                        <div className="flex items-center justify-between mb-6">
+                            <h1 className="text-[24px] font-[700] dark:text-white">Diller ro'yxati</h1>
+                            <button onClick={addUser} className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-[14px] cursor-pointer">
+                                <img src={addIcon} alt="img"/>Yangi diller qushish
                             </button>
                         </div>
-                    </div>
 
-                    <div className="bg-white dark:bg-[#1E1E2E] h-[400px] overflow-scroll rounded-lg">
-                        <div className="grid grid-cols-6 px-4 py-3 items-center">
-                            <div>
-                                <input className="cursor-pointer" type="checkbox"/>
+
+                        <div
+                            className="bg-white dark:bg-[#1E1E2E] border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-2 mb-4 flex items-center gap-2">
+                            <img src={searchIcon} alt="img"/>
+                            <input
+                                className="outline-none w-[1120px] text-[14px] text-gray-500 dark:text-gray-300 bg-transparent"
+                                placeholder="Diler nomi yoki mas'ul shaxs bo'yicha qidirish..." onChange={searchUser}/>
+                        </div>
+
+                        <div className="flex gap-3 mb-4">
+                            <select
+                                className="border border-gray-200 dark:border-gray-700 dark:bg-[#1E1E2E] dark:text-gray-300 rounded-lg px-3 py-1.5 text-[14px] cursor-pointer"
+                                onChange={chengeSecond}>
+                                <option>Status</option>
+                                <option>Faol</option>
+                                <option>Faol emas</option>
+                            </select>
+                            <select
+                                className="border border-gray-200 dark:border-gray-700 dark:bg-[#1E1E2E] dark:text-gray-300 rounded-lg px-3 py-1.5 text-[14px] cursor-pointer"
+                                onChange={changeAll}>
+                                <option>Manzil</option>
+                                <option>Toshkent</option>
+                                <option>Samarqand</option>
+                                <option>Buxoro</option>
+                                <option>Farg'ona</option>
+                            </select>
+                        </div>
+
+                        <div
+                            className="flex items-center justify-between px-4 py-[10px] bg-[#135BEC1A] dark:bg-blue-900/20 rounded-lg mb-4">
+                            <p className="text-[14px] text-blue-600">{selected.length} diler tanlandi</p>
+                            <div className="flex gap-2">
+                                <button
+                                    className="flex items-center border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#1E1E2E] dark:text-gray-300 w-[191px] h-[36px] cursor-not-allowed rounded-lg text-[14px]">
+                                    <img className="ml-[10px]" src={eye} alt="img"/> Statusni o'zgartirish
+                                </button>
+                                <button onClick={deleteSelected}
+                                        className="flex items-center bg-red-500 text-white w-[107px] h-[36px] rounded-lg text-[14px] cursor-pointer">
+                                    <img className="ml-[15px]" src={whiteIcon} alt="img"/> O'chirish
+                                </button>
                             </div>
-                            <p className="text-[12px] font-[600] text-gray-500 dark:text-gray-400">DILER NOMI</p>
-                            <p className="text-[12px] font-[600] text-gray-500 dark:text-gray-400">MAS'UL SHAXS</p>
-                            <p className="text-[12px] font-[600] text-gray-500 dark:text-gray-400">MANZIL</p>
-                            <p className="text-[12px] font-[600] text-gray-500 dark:text-gray-400">STATUS</p>
-                            <p className="text-[12px] font-[600] text-gray-500 dark:text-gray-400">HARAKATLAR</p>
                         </div>
-                        {
-                            data.length ? (
-                                data.slice(firstPage, endPage).map((row) => (
-                                    <div key={row.id}
-                                         className="grid grid-cols-6 px-4 py-3 border-t border-gray-100 dark:border-gray-700 items-center">
-                                        <div className="cursor-pointer">
-                                            <input
-                                                type="checkbox"
-                                                checked={selected.includes(row.id)}
-                                                onChange={() => toggleSelect(row.id)}
-                                                className="cursor-pointer"
-                                            />
-                                        </div>
-                                        <div>
+
+                        <div className="bg-white dark:bg-[#1E1E2E] h-[400px] overflow-scroll rounded-lg">
+                            <div className="grid grid-cols-6 px-4 py-3 items-center">
+                                <div>
+                                    <input className="cursor-pointer" type="checkbox"/>
+                                </div>
+                                <p className="text-[12px] font-[600] text-gray-500 dark:text-gray-400">DILER NOMI</p>
+                                <p className="text-[12px] font-[600] text-gray-500 dark:text-gray-400">MAS'UL SHAXS</p>
+                                <p className="text-[12px] font-[600] text-gray-500 dark:text-gray-400">MANZIL</p>
+                                <p className="text-[12px] font-[600] text-gray-500 dark:text-gray-400">STATUS</p>
+                                <p className="text-[12px] font-[600] text-gray-500 dark:text-gray-400">HARAKATLAR</p>
+                            </div>
+                            {
+                                data.length ? (
+                                    data.slice(firstPage, endPage).map((row) => (
+                                        <div key={row.id}
+                                             className="grid grid-cols-6 px-4 py-3 border-t border-gray-100 dark:border-gray-700 items-center">
+                                            <div className="cursor-pointer">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={selected.includes(row.id)}
+                                                    onChange={() => toggleSelect(row.id)}
+                                                    className="cursor-pointer"
+                                                />
+                                            </div>
+                                            <div>
+                                                {editId === row.id ? (
+                                                    <input className="border rounded px-2 py-1 text-[14px] w-full"
+                                                           value={editData.nomi}
+                                                           onChange={(e) => setEditData({...editData, nomi: e.target.value})}/>
+                                                ) : (
+                                                    <p className="text-[14px] dark:text-white">{row.nomi}</p>
+                                                )}
+                                                <p className="text-[12px] text-gray-400 dark:text-gray-500">ID: {row.id}</p>
+                                            </div>
+                                            <div>
+                                                {editId === row.id ? (
+                                                    <input className="border rounded px-2 py-1 text-[14px] w-full" value={editData.shaxs} onChange={(e) => setEditData({...editData, shaxs: e.target.value})}/>
+                                                ) : (
+                                                    <p className="text-[14px] dark:text-white">{row.shaxs}</p>
+                                                )}
+                                                <p className="text-[12px] text-gray-400 dark:text-gray-500">{row.tel}</p>
+                                            </div>
+                                            <div>
+                                                {editId === row.id ? (
+                                                    <input className="border rounded px-2 py-1 text-[14px] w-full" value={editData.manzil} onChange={(e) => setEditData({...editData, manzil: e.target.value})}/>
+                                                ) : (
+                                                    <p className="text-[14px] dark:text-white">{row.manzil}</p>
+                                                )}
+                                            </div>
                                             {editId === row.id ? (
-                                                <input className="border rounded px-2 py-1 text-[14px] w-full"
-                                                       value={editData.nomi}
-                                                       onChange={(e) => setEditData({...editData, nomi: e.target.value})}/>
+                                                <select className="border rounded py-1 text-[14px]" value={editData.status || ""} onChange={(e) => setEditData({...editData, status: e.target.value})}>
+                                                    <option>Faol</option>
+                                                    <option>Faol emas</option>
+                                                </select>
                                             ) : (
-                                                <p className="text-[14px] dark:text-white">{row.nomi}</p>
-                                            )}
-                                            <p className="text-[12px] text-gray-400 dark:text-gray-500">ID: {row.id}</p>
-                                        </div>
-                                        <div>
-                                            {editId === row.id ? (
-                                                <input className="border rounded px-2 py-1 text-[14px] w-full" value={editData.shaxs} onChange={(e) => setEditData({...editData, shaxs: e.target.value})}/>
-                                            ) : (
-                                                <p className="text-[14px] dark:text-white">{row.shaxs}</p>
-                                            )}
-                                            <p className="text-[12px] text-gray-400 dark:text-gray-500">{row.tel}</p>
-                                        </div>
-                                        <div>
-                                            {editId === row.id ? (
-                                                <input className="border rounded px-2 py-1 text-[14px] w-full" value={editData.manzil} onChange={(e) => setEditData({...editData, manzil: e.target.value})}/>
-                                            ) : (
-                                                <p className="text-[14px] dark:text-white">{row.manzil}</p>
-                                            )}
-                                        </div>
-                                        {editId === row.id ? (
-                                            <select className="border rounded py-1 text-[14px]" value={editData.status || ""} onChange={(e) => setEditData({...editData, status: e.target.value})}>
-                                                <option>Faol</option>
-                                                <option>Faol emas</option>
-                                            </select>
-                                        ) : (
-                                            <span
-                                                className={`px-3 py-1 rounded-full text-[12px] font-[500] w-[50px] ${row.status === "Faol" ? "bg-[#DCFCE7] text-green-600" : "bg-[#FEE2E2] text-red-500 w-[80px]"}`}>
+                                                <span
+                                                    className={`px-3 py-1 rounded-full text-[12px] font-[500] w-[50px] ${row.status === "Faol" ? "bg-[#DCFCE7] text-green-600" : "bg-[#FEE2E2] text-red-500 w-[80px]"}`}>
                                                 {row.status}
                                             </span>
-                                        )}
-                                        <div className="flex items-center gap-3">
-                                            <img src={eyeIcon} alt="view" className="cursor-wait"/>
-                                            {
-                                                editId === row.id ? (
-                                                    <button onClick={() => saveEdit(row.id)}
-                                                            className="text-green-500 font-[700] text-[18px]">✓</button>
-                                                ) : (
-                                                    <img onClick={() => startEdit(row)} src={editIcon} alt="edit"
-                                                         className="cursor-pointer"/>
-                                                )
-                                            }
-                                            <img onClick={() => deleteAccount(row.id)} src={deleteIcon} alt="delete"
-                                                 className="cursor-pointer"/>
+                                            )}
+                                            <div className="flex items-center gap-3">
+                                                <img src={eyeIcon} alt="view" className="cursor-wait"/>
+                                                {
+                                                    editId === row.id ? (
+                                                        <button onClick={() => saveEdit(row.id)}
+                                                                className="text-green-500 font-[700] text-[18px]">✓</button>
+                                                    ) : (
+                                                        <img onClick={() => startEdit(row)} src={editIcon} alt="edit"
+                                                             className="cursor-pointer"/>
+                                                    )
+                                                }
+                                                <img onClick={() => deleteAccount(row.id)} src={deleteIcon} alt="delete"
+                                                     className="cursor-pointer"/>
+                                            </div>
                                         </div>
+                                    ))
+                                ) : (
+                                    <div className="flex justify-center items-center py-16">
+                                        <h1 className="text-[30px] text-red-400">bro bu yerda siz qidirgan inson yuq</h1>
                                     </div>
-                                ))
-                            ) : (
-                                <div className="flex justify-center items-center py-16">
-                                    <h1 className="text-[30px] text-red-400">bro bu yerda siz qidirgan inson yuq</h1>
-                                </div>
-                            )
-                        }
-                    </div>
-                    <div>
-                        <Pagination count={a} onChange={handleChange}/>
+                                )
+                            }
+                        </div>
+                        <div>
+                            <Pagination count={a} onChange={handleChange}/>
+                        </div>
                     </div>
                 </div>
             </div>

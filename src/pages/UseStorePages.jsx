@@ -37,7 +37,7 @@ export default function UseStorePages() {
                 <div
                     className="relative w-full max-w-md p-8 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] text-center">
                     <h1 className="text-3xl font-bold text-white bg-clip-text mb-8">
-                        Topib keldizmi bratan😁
+                        Yana keldizmi bratan😁
                     </h1>
                     <button onClick={boss}
                             className="group relative px-8 py-3 font-bold text-white transition-all duration-300 active:scale-95">

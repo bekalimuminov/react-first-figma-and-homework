@@ -2,6 +2,10 @@ import yukCar from "../assets/yukCar.svg";
 import time from "../assets/time.svg";
 import yes from "../assets/yes.svg";
 import no from "../assets/no.svg";
+import diller from "../assets/dillerProfilBigImg.png";
+import icon1 from "../assets/adminIMg1.svg";
+import icon2 from "../assets/adminIMg2.svg";
+import icon3 from "../assets/adminIMg3.svg";
 
 export const mock = [
     { id: 73456, nomi: "Premium Motors", shaxs: "Akmal Valiev", tel: "+998 90 123 45 67", manzil: "Toshkent", status: "Faol", tanlandi: true },
@@ -61,5 +65,45 @@ export const mock2 = [
     { id: "#DLV-001251", sana: "2024-07-19", jonatuvchi: "Diler: Aziz Ahmedov", qabul: "Do'kon: Makro", mahsulot: "Nestle Sut 1L", miqdor: 200, status: "Bekor qilinga" },
     { id: "#DLV-001250", sana: "2024-07-18", jonatuvchi: "Asosiy ombor", qabul: "Diler: Aziz Ahmedov", mahsulot: "Sultan Choy (yashil)", miqdor: 40, status: "Yetkazilgan" },
     { id: "#DLV-001249", sana: "2024-07-18", jonatuvchi: "Diler: Sardor Komilov", qabul: "Do'kon: Havas", mahsulot: "Coca-Cola", miqdor: 500, status: "Tayyorlanmo" },
-
 ]
+
+export const profileData = {
+    id: 'login',
+    status: 'Faol',
+    avatar: diller,
+    phone: '+998 90 123 45 67',
+    email: 'aziz.ahmedov@example.com',
+    address: "Toshkent sh., Yunusobod t., 19-kvartal, 25-uy",
+    company: '"AZIZ-TRADE" MChJ',
+    manager: 'Salim Valiev',
+};
+
+export const reja = [
+    {
+        label: 'Savdo maqsadi',
+        current: 15750,
+        total: 20000,
+        unit: 'UZS',
+        percent: 78.8,
+        color: 'bg-green-500',
+        icon: icon1,
+    },
+    {
+        label: 'Tashriflar maqsadi',
+        current: 45,
+        total: 50,
+        unit: 'Tashrif',
+        percent: 90,
+        color: 'bg-blue-500',
+        icon: icon2,
+    },
+    {
+        label: 'Yangi mijozlar',
+        current: 2,
+        total: 5,
+        unit: 'Mijoz',
+        percent: 40,
+        color: 'bg-red-500',
+        icon: icon3,
+    },
+];
